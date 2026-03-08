@@ -5,46 +5,22 @@ import numpy as np
 df = pd.read_csv("communities.data", na_values="?")
 df = df.dropna()
 
-print("Shape:", df.shape)
-print("\nSummary Statistics:")
-display(df.describe())
+#print("Shape:", df.shape)
+#print("\nSummary Statistics:")
+#display(df.describe())
 
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-plt.figure()
-sns.histplot(df["ViolentCrimesPerPop"], kde=True)
-plt.axvline(df["ViolentCrimesPerPop"].mean())
-plt.title("Distribution of Violent Crimes Per Population")
-plt.xlabel("Violent Crimes Per 100K")
-plt.ylabel("Frequency")
-plt.show()
+urban_df = df[df["pctUrban"] > 0.5]
 
-df["log_crime"] = np.log1p(df["ViolentCrimesPerPop"])
+print("Original dataset size:", df.shape)
+print("Urban dataset size:", urban_df.shape)
 
-plt.figure()
-sns.histplot(df["log_crime"], kde=True)
-plt.title("Log-Transformed Violent Crime Distribution")
-plt.show()
+# Compare crime rates
+df["UrbanCommunity"] = (df["pctUrban"] > 0.5).astype(int)
 
-selected_vars = [
-    "PctPopUnderPov",
-    "perCapInc",
-    "medIncome",
-    "PctUnemployed",
-    "PctNotHSGrad",
-    "PctBSorMore",
-    "PopDens",
-    "pctUrban",
-    "PctUsePubTrans",
-    "PctPersDenseHous",
-    "ViolentCrimesPerPop"
-]
+crime_compare = df.groupby("UrbanCommunity")["ViolentCrimesPerPop"].mean()
 
-corr = df[selected_vars].corr()
-corr["ViolentCrimesPerPop"].sort_values(ascending=False)
-
-plt.figure(figsize=(10,8))
-sns.heatmap(corr, annot=True, cmap="coolwarm", center=0)
-plt.title("Correlation Heatmap")
-plt.show()
+print("\nAverage Crime Rates:")
+print(crime_compare)
