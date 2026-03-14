@@ -1,6 +1,6 @@
 # Urban Crime Modeling and Prediction
 
-This project analyzes socioeconomic factors associated with violent crime rates within urban communities using the Communities and Crime dataset from the UCI Machine Learning Repository. Five machine learning models were implemented to identify key predictors of violent crime and compare model performance.
+This project analyzes socioeconomic factors associated with violent crime rates within urban communities using the Communities and Crime dataset from the UCI Machine Learning Repository. Five ML models were implemented to identify key predictors of violent crime and compare model performance.
 
 The analysis focuses specifically on crime rates within predominatly urban communities
 
